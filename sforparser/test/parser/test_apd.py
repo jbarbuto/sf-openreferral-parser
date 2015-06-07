@@ -3,14 +3,15 @@ import os
 
 import pytest
 
-from sforparser.parser.apd import scraper
+from sforparser.parser.apd import ApdParser
 
 INPUT_FILE = os.path.join(str(pytest.config.rootdir), 'data/apd/input.txt')
 
 
 @pytest.fixture
 def data():
-    json_str = scraper(open(INPUT_FILE))
+    parser = ApdParser()
+    json_str = parser.parse(open(INPUT_FILE))
 
     artifact_dir = os.getenv('CIRCLE_ARTIFACTS')
     if artifact_dir:
