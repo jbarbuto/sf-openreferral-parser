@@ -1,6 +1,10 @@
 import re
 
+import abc
+import six
 
+
+@six.add_metaclass(abc.ABCMeta)
 class AbstractStringConverter(object):
     list_conversions = []
     list_splitter = ','
@@ -12,8 +16,9 @@ class AbstractStringConverter(object):
 
         return [self._strip(s) for s in post_string.split(self.list_splitter)]
 
+    @abc.abstractmethod
     def _strip(self, pre_string):
-        raise NotImplementedError
+        pass
 
 
 class EnglishStringConverter(AbstractStringConverter):
