@@ -9,7 +9,7 @@ def parse_list(list_string):
             .replace(" and ", ",") \
             .split(",")
 
-    return map(_strip, split_list)
+    return [_strip(s) for s in split_list]
 
 
 def _strip(pre_string):
