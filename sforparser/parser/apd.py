@@ -129,7 +129,7 @@ class ApdParser(BaseParser):
                         not_matched.append(line)
 
         entries = [self.to_open_referral(e) for e in entries]
-        return json.dumps(entries, indent=2, ensure_ascii=True)
+        return json.dumps(entries, indent=2, ensure_ascii=True, sort_keys=True)
 
     def init_entry(self):
         entry = {
