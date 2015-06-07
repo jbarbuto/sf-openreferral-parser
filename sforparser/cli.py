@@ -3,8 +3,9 @@
 import click
 import stevedore
 
+
 @click.command()
-@click.option('--format', help='File format')
+@click.option('-f', '--format', help='File format')
 @click.argument('input', type=click.File())
 def main(format, input):
     mgr = stevedore.driver.DriverManager(
