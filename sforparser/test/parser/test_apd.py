@@ -3,9 +3,9 @@ import os
 
 import pytest
 
-from sforparser.apd import scraper
+from sforparser.parser.apd import scraper
 
-INPUT_FILE = 'data/apd/input.txt'
+INPUT_FILE = os.path.join(str(pytest.config.rootdir), 'data/apd/input.txt')
 
 
 @pytest.fixture

@@ -3,7 +3,7 @@ import logging
 import re
 import sys
 
-from sforparser.parsers import english
+from sforparser.helper.string_converter import EnglishStringConverter
 
 # Mapping of APD fields to ohana
 FIELDS = [
@@ -198,8 +198,9 @@ def to_open_referral(entry):
     if not entry['program_name'].strip():
         entry['program_name'] = entry['organization_name']
 
-    languages = english.parse_list(languages)
-    emails = english.parse_list(emails)
+    english_string_converter = EnglishStringConverter()
+    languages = english_string_converter.to_list(languages)
+    emails = english_string_converter.to_list(emails)
 
     comma_pos = entry['name'].find(',')
     full_len = len(entry['name'])
