@@ -133,24 +133,24 @@ class ApdParser(BaseParser):
 
     def init_entry(self):
         entry = {
-            'eligibility': "",
-            'fees': "",
             'accessibility': "",
-            'audience': "",
-            'how_to_apply': "",
-            'hours': "",
-            'emails': "",
-            'urls': "",
-            'languages': "",
-            'fax': "",
-            'phone': "",
-            'name': "",
             'address': "",
             'audience': "",
+            'audience': "",
             'description': "",
+            'eligibility': "",
+            'emails': "",
+            'fax': "",
+            'fees': "",
+            'hours': "",
+            'how_to_apply': "",
             'keywords': "",
+            'languages': "",
+            'name': "",
             'organization_name': "",
+            'phone': "",
             'program_name': "",
+            'urls': "",
         }
         return entry
 
