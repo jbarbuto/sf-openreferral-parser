@@ -9,7 +9,7 @@ import stevedore
 @click.argument('input', type=click.File())
 def main(format, input):
     mgr = stevedore.driver.DriverManager(
-        namespace='sforparser.parser',
+        namespace='sfordata.parser',
         name=format,
         invoke_on_load=True,
     )

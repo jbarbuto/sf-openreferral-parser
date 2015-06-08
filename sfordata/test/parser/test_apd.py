@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from sforparser.parser.apd import ApdParser
+from sfordata.parser.apd import ApdParser
 
 INPUT_FILE = os.path.join(str(pytest.config.rootdir), 'data/apd/input.txt')
 

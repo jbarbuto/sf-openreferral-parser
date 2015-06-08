@@ -1,4 +1,5 @@
-from sforparser.helper.string_converter import EnglishStringConverter
+from sfordata.helper.string_converter import EnglishStringConverter
+
 
 class TestEnglishStringConverterToList(object):
     def setup_class(cls):
