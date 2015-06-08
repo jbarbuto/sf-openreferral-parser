@@ -7,68 +7,68 @@ from . import BaseParser
 from ..helper.string_converter import EnglishStringConverter
 
 # Mapping of APD fields to ohana
-FIELDS = [
-    ('Administration Mailing Address', 'address'),
-    ('Administrative Office', 'address'),
-    ('Office location', 'address'),
-    ('Intake location', 'address'),
-    ('Mailing Address', 'address'),
-    ('Main Office', 'address'),
-    ('Corporate Office', 'address'),
-    ('24-Hour Hotline', 'phone'),
-    ('Toll-Free Telephone', 'phone'),
-    ('General Inquiries', 'phone'),
-    ('Emergency Center Phone', 'phone'),
-    ('Emergency Bed Call-in #', 'phone'),
-    ('Address', 'address'),
-    ('Primary Community Served', 'audience'),
-    ('Notes', 'description'),
-    ('Info Line', 'phone'),
-    ('Phone', 'phone'),
-    ('Main Phone', 'phone'),
-    ('Intake Phone', 'phone'),
-    ('Hours', 'hours'),
-    ('Clinic Hours', 'hours'),
-    ('Hours/Meeting times', 'hours'),
-    ('Intake Hours', 'hours'),
-    ('Drop-in Hours', 'hours'),
-    ('Program Hours', 'hours'),
-    ('Specific Intake Days and Times', 'hours'),
-    ('Days and Hours', 'hours'),
-    ('TDD', 'phone'),
-    ('Fax', 'fax'),
-    ('Email', 'emails'),
-    ('E-mail', 'emails'),
-    ('url', 'urls'),
-    ('Languages Spoken', 'languages'),
-    ('What to Bring', 'how_to_apply'),
-    ('Things to Know', 'how_to_apply'),
-    ('Accessibility', 'accessibility'),
-    ('Client fees, if any', 'fees'),
-    ('Client fee, if any', 'fees'),
-    ('Client fees', 'fees'),
-    ('Eligible Population', 'audience'),
-    ('Eligible Populations', 'audience'),
-    ('Eligible Population Served', 'audience'),
-    ('Not Eligible', 'eligibility'),
-    ('Restrictions', 'eligibility'),
-    ('Direct Services', 'keywords'),
-    ('Direct Service', 'keywords'),
-    ('Faith Based', 'description'),
-    ('Contact Persons', 'name'),
-    ('Contact Person', 'name'),
-    ('Contact', 'name'),
-    ('Person to Contact', 'name'),
-    ('Intake Days', 'hours'),
-    ('Facility Hours', 'hours'),
-    ('Drop-In Clinic Hours', 'hours'),
-    ('Location', 'address'),
-    ('Locations', 'address'),
-    ('Services', 'keywords'),
-    ('Days and Times', 'hours'),
-    ('Note', 'description'),
-]
-FINAL_FIELD = 'direct services'
+FIELDS = {
+    '24-Hour Hotline': "phone",
+    'Accessibility': "accessibility",
+    'Address': "address",
+    'Administration Mailing Address': "address",
+    'Administrative Office': "address",
+    'Client fee, if any': "fees",
+    'Client fees': "fees",
+    'Client fees, if any': "fees",
+    'Clinic Hours': "hours",
+    'Contact Person': "name",
+    'Contact Persons': "name",
+    'Contact': "name",
+    'Corporate Office': "address",
+    'Days and Hours': "hours",
+    'Days and Times': "hours",
+    'Direct Service': "keywords",
+    'Direct Services': "keywords",
+    'Drop-In Clinic Hours': "hours",
+    'Drop-in Hours': "hours",
+    'E-mail': "emails",
+    'Eligible Population Served': "audience",
+    'Eligible Population': "audience",
+    'Eligible Populations': "audience",
+    'Email': "emails",
+    'Emergency Bed Call-in #': "phone",
+    'Emergency Center Phone': "phone",
+    'Facility Hours': "hours",
+    'Faith Based': "description",
+    'Fax': "fax",
+    'General Inquiries': "phone",
+    'Hours': "hours",
+    'Hours/Meeting times': "hours",
+    'Info Line': "phone",
+    'Intake Days': "hours",
+    'Intake Hours': "hours",
+    'Intake Phone': "phone",
+    'Intake location': "address",
+    'Languages Spoken': "languages",
+    'Location': "address",
+    'Locations': "address",
+    "Mailing Address": "address",
+    'Main Office': "address",
+    'Main Phone': "phone",
+    'Not Eligible': "eligibility",
+    'Note': "description",
+    'Notes': "description",
+    'Office location': "address",
+    'Person to Contact': "name",
+    'Phone': "phone",
+    'Primary Community Served': "audience",
+    'Program Hours': "hours",
+    'Restrictions': "eligibility",
+    'Services': "keywords",
+    'Specific Intake Days and Times': "hours",
+    'TDD': "phone",
+    'Things to Know': "how_to_apply",
+    'Toll-Free Telephone': "phone",
+    'What to Bring': "how_to_apply",
+    'url': "urls",
+}
+FINAL_FIELD = 'Direct Services'
 
 
 class ApdParser(BaseParser):
@@ -103,8 +103,7 @@ class ApdParser(BaseParser):
                     entry['description'] = line
                 else:
                     # Loop through every field and look for a match
-                    for field in FIELDS:
-                        apd_field, ohana_field = field
+                    for apd_field, ohana_field in FIELDS.items():
                         matched = self.match_with_field(apd_field, line)
                         if matched:
                             field_value = line.split(':', 1)[-1].replace(';', ',').strip()
@@ -112,7 +111,7 @@ class ApdParser(BaseParser):
                             entry[ohana_field] += field_value
 
                             # Are we at the end of the record?
-                            if apd_field.lower() == FINAL_FIELD:
+                            if apd_field.lower() == FINAL_FIELD.lower():
                                 # TODO: figure out what to do with extra data
                                 # that doesn't match a known field
                                 if not_matched:
@@ -134,25 +133,15 @@ class ApdParser(BaseParser):
 
     def init_entry(self):
         entry = {
-            'accessibility': "",
-            'address': "",
-            'audience': "",
-            'audience': "",
             'description': "",
-            'eligibility': "",
-            'emails': "",
-            'fax': "",
-            'fees': "",
-            'hours': "",
-            'how_to_apply': "",
-            'keywords': "",
-            'languages': "",
-            'name': "",
             'organization_name': "",
-            'phone': "",
             'program_name': "",
-            'urls': "",
         }
+
+        # Convert to set for removing duplicates
+        for ohana_field in set(FIELDS.values()):
+            entry[ohana_field] = ""
+
         return entry
 
     def match_with_field(self, field, line):
