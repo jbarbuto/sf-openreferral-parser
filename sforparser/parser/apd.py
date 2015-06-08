@@ -92,14 +92,14 @@ class ApdParser(BaseParser):
                     # First line often contains two values, org and program
                     for i, items in enumerate(line.split(' ' * 3)):
                         if i == 0:
-                            logging.debug("Organization: %s", items)
+                            logging.debug("organization_name: %s", items)
                             entry['organization_name'] = items
                         else:
-                            logging.debug("Program: %s", items)
+                            logging.debug("program_name: %s", items)
                             entry['program_name'] = items
                 # Second line is the description...hopefully
                 elif entry_line_num == 2:
-                    logging.debug("Description: %s", line)
+                    logging.debug("description: %s", line)
                     entry['description'] = line
                 else:
                     # Loop through every field and look for a match
@@ -107,8 +107,9 @@ class ApdParser(BaseParser):
                         apd_field, ohana_field = field
                         matched = self.match_with_field(apd_field, line)
                         if matched:
-                            field_value = line.split(':')[-1].replace(';', ',')
-                            entry[ohana_field] += field_value.strip()
+                            field_value = line.split(':', 1)[-1].replace(';', ',').strip()
+                            logging.debug("%s: %s", ohana_field, field_value)
+                            entry[ohana_field] += field_value
 
                             # Are we at the end of the record?
                             if apd_field.lower() == FINAL_FIELD:
