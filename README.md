@@ -1,6 +1,8 @@
 SF Open Referral Source Data Library
 ====================================
 
+# NOTE: This repo is no longer under development or being maintained. Information is for reference purposes only.
+
 ##Installation
 
 From the root of the repository, run the following:
